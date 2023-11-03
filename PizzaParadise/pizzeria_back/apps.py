@@ -20,5 +20,5 @@ class PizzeriaBackConfig(AppConfig):  #при запуске runserver запу�
         os.environ[once_key] = 'True'
 
         # import is done only here after models are loaded
-        from main_queue_engine import schedule
+        from pizzeria_back.main_queue_engine import schedule  # run once выполняется из корневой папки PizzaParadise, поэтому нужен путь из корневой папки
         schedule()
