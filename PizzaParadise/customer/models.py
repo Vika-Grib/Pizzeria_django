@@ -1,11 +1,14 @@
 from django.db import models
 
 class Order(models.Model):
-    name = models.CharField(max_length=100)  # Название пиццы
-    description = models.TextField()         # Описание
-    price = models.DecimalField(max_digits=5, decimal_places=2)  # Цена
-    # image = models.ImageField(upload_to='pizza_images/', blank=True, null=True)  # Изображение пиццы
+    id = models.TextField(primary_key=True)
+    title = models.TextField(max_length=100, default='')  # Название пиццы
+    big_price = models.DecimalField(max_digits=5, decimal_places=2, default=0)  # Цена
+    medium_price = models.DecimalField(max_digits=5, decimal_places=2, default=0)  # Цена
+    thin_price = models.DecimalField(max_digits=5, decimal_places=2, default=0)  # Цена
+    ingredients = models.TextField(default='')         # Описание
+    image = models.TextField(default=' ')  # Изображение пиццы
 
     def __str__(self):
-        return self.name
+        return self.title
 

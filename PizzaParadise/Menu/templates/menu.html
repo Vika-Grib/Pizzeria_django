@@ -1,0 +1,31 @@
+<html>
+<style type="text/css">
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+
+body {
+    margin: 0;
+    width: 100%
+}
+
+* {
+    box-sizing: border-box
+}</style>
+<body>
+<h1>Menu!</h1>
+{% for product in products %}
+    <ol class='success'>
+        <li>{{ product.title }}</li>
+        <li>Большая пицца 36 см. {{ product.big_price }}</li>
+        <li>{{ product.medium_price }}</li>
+        <li>{{ product.thin_price }}</li>
+        <li>{{ product.ingredients }}</li>
+        <li><img src="{{ product.image }}"></li>
+
+    </ol>
+{% endfor %}
+</body>
+</html>

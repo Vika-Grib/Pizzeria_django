@@ -5,7 +5,7 @@ from .models import Order
 
 def main(request):
     # return HttpResponse('Это домашняя начальная страница!')
-    return render(request, 'main.html')
+    return render(request, 'menu.html')
 
 # def home(request):
 #     return render(request, 'home.html')

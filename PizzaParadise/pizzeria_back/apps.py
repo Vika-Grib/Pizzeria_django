@@ -26,3 +26,7 @@ class PizzeriaBackConfig(AppConfig):  #при запуске runserver запу�
         # запускаем вторую очередь один раз
         from pizzeria_back.processing_queue_engine import schedule  # run once выполняется из корневой папки PizzaParadise, поэтому нужен путь из корневой папки
         schedule()
+
+        # запускаем, плдключаем очередь transfer_queue_engine
+        from pizzeria_back.transfer_queue_engine import schedule
+        schedule()

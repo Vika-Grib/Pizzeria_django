@@ -50,7 +50,7 @@ def send_to_next_queue(message): # эта ф-ция переход на новы
     socket = context.socket(zmq.PUSH)  # пушем отправляем, а пулэм забираем сообщение уже в процессинге
     socket.connect("tcp://localhost:5554")
     socket.send_json(message)
-    print(f"Send [ {message} ]")
+    print(f"Send to processing queue [ {message} ]")
 
 
 def check_order(id=None):
