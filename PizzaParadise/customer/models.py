@@ -8,6 +8,7 @@ class Order(models.Model):
     thin_price = models.DecimalField(max_digits=5, decimal_places=2, default=0)  # Цена
     ingredients = models.TextField(default='')         # Описание
     image = models.TextField(default=' ')  # Изображение пиццы
+    status = models.TextField(default='')
 
     def __str__(self):
         return self.title

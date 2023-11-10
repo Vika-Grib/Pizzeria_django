@@ -24,7 +24,7 @@ def tr():
         #  Wait for next request from client
         message = socket.recv_json()  # запрос на то что мы получим сообщение, запускается постоянно - через ctrl+C нельзя было остановить сервер и следовательно след команда, кот.останавливает цикл
 
-        if message["order_id"] == -1:  #чтобы не менять директорию - на случай если нужно остановить сервер - сами отправляем -1
+        if message["id"] == -1:  #чтобы не менять директорию - на случай если нужно остановить сервер - сами отправляем -1
             print("break")
             break
         elem = message   # на случай если получим не только json, но и сообщение какое-нибудь
@@ -32,15 +32,17 @@ def tr():
 
         #  Do some 'work' - занимает время на обработку и ему нужна 1 сек, чтобы делать что-то дальше
         time.sleep(1)
+        order_confirmed = check_order(elem['id'])
 
-        order_confirmed = check_order(elem['order_id'])
         if order_confirmed:
+            schedule_1(message, 'accepted')
             print("sending to DB")
             send_to_db(elem)
             #  Send reply back to client
             socket.send(b"Your order confirmed and accepted!")
             send_to_next_queue(elem)  # после того как отправили в БД, мы также отправляем в след очередь
         else:
+            schedule_1(message, 'unconfirmed')
             #  Send reply back to client
             socket.send(b"Your order is unconfirmed")
 
@@ -56,14 +58,32 @@ def send_to_next_queue(message): # эта ф-ция переход на новы
 def check_order(id=None):
     return True
 
+
 def send_to_db(message):
     # Connect к Базe данных
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
     #conn = sqlite3.connect('F:\\Pizza\\PizzaParadise\\db.sqlite3')
     # Создаем объект cursor, который позволяет нам взаимодействовать с базой данных и добавлять записи
     cursor = conn.cursor()
-    cursor.execute('''INSERT INTO customer_order(name, description, price) VALUES (?,?,?)''',
-                   (message['name'], message['description'], message['price']))
+    cursor.execute('''INSERT INTO customer_order(title, ingredients, big_price, medium_price, thin_price, image, id, status) VALUES (?,?,?,?,?,?,?,?)''',
+                   (message['title'], message['ingredients'], message['big_price'], message['medium_price'], message['thin_price'], message['image'], message['id'], message['status']))
     conn.commit()
 # python manage.py runserver
 
+
+
+def send_to_notify(message, status): # эта ф-ция переход на новый этап очереди (тут след processing)
+    context = zmq.Context()
+    socket = context.socket(zmq.PUSH)  # пушем отправляем, а пулэм забираем сообщение уже в процессинге
+    socket.connect("tcp://localhost:5552")
+    print(message)
+    order_id = message['id']
+    notification = {'order_id': order_id, 'status': status}
+    socket.send_json(notification)
+    print(f"Send to notify [ {notification} ]")
+
+# добавляем функцию def send_to_notify в schedule_1 - чтобы всем отправлялись асинхронно уведомления
+def schedule_1(message, status): # отвечает за работу печки!
+    scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2}) # запускаем асинхронно кукинг готовку и дальше мы могли принимать новые пиццы
+    scheduler.add_job(lambda: send_to_notify(message, status), id=f'process')
+    scheduler.start()

@@ -1,12 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic import ListView
 from .models import Order
 
 
-def main(request):
-    # return HttpResponse('Это домашняя начальная страница!')
-    return render(request, 'menu.html')
+class Orders_view(ListView):
+    model = Order
+    template_name = 'back.html'
+    context_object_name = 'products'
 
-# def home(request):
-#     return render(request, 'home.html')
+
+def back_html(request):
+    # return HttpResponse('Это домашняя начальная страница!')
+    return render(request, 'back.html')
 

@@ -30,12 +30,14 @@ def cooking(message):  # не отправляет сам заказ, а про�
     cursor = conn.cursor()
     cursor.execute('SELECT * from active_orders')
     active_orders = list(cursor.fetchall())[0][0]
+    send_to_notify(message,'cooking')
     time.sleep(3)
     if active_orders >= 1:
         active_orders -= 1
         work_with_active_orders_db(active_orders)
         print('*', 'cooked!', '*')
         send_to_next_queue(message)
+        send_to_notify(message, 'cooked!')
 
 
 async def processing(socket, active_orders): # добавляет заказы в бд
@@ -55,8 +57,8 @@ def schedule_1(message, active_orders): # отвечает за работу п�
 
     scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2}) # запускаем асинхронно кукинг готовку и дальше мы могли принимать новые пиццы
     # if not scheduler.get_job('process'):
-    scheduler.add_job(lambda: cooking(message), id=f'process-{active_orders}')
-    scheduler.start()
+    scheduler.add_job(lambda: cooking(message), id=f'process-{active_orders}') # add_job  - доб задание
+    scheduler.start() # запускает выполнение ассинхронно
 
 def tr():
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
@@ -83,3 +85,12 @@ def send_to_next_queue(message): # эта ф-ция переход на новы
     socket.connect("tcp://localhost:5553")
     socket.send_json(message)
     print(f"Send to transfer [ {message} ]")
+
+def send_to_notify(message, status): # эта ф-ция переход на новый этап очереди (тут след processing)
+    context = zmq.Context()
+    socket = context.socket(zmq.PUSH)  # пушем отправляем, а пулэм забираем сообщение уже в процессинге
+    socket.connect("tcp://localhost:5552")
+    order_id = message['id']
+    notification = {'order_id': order_id, 'status': status}
+    socket.send_json(notification)
+    print(f"Send to notify [ {notification} ]")

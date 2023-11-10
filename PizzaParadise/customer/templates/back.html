@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en - ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pizzeria_back</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    padding: 15px; /* Отступ внутри заголовка */
+    background-color: #C6482E; /* Цвет подложки */
+    color: white; /* Цвет текста */
+    width: 100%; /* Ширина подложки - 100% ширины родительского контейнера */
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>pizzeria_back!!! Заказы и их статус! Админка.</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Ingredients</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.big_price }}</td>
+                    <td>{{ product.ingredients }}</td>
+                    <td>{{ product.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

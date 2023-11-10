@@ -30,3 +30,6 @@ class PizzeriaBackConfig(AppConfig):  #при запуске runserver запу�
         # запускаем, плдключаем очередь transfer_queue_engine
         from pizzeria_back.transfer_queue_engine import schedule
         schedule()
+
+        from pizzeria_back.notify_queue_engine import schedule
+        schedule()
