@@ -1,116 +1,60 @@
 <!DOCTYPE html>
 <html lang="en - ru">
 <head>
+    {% load static %}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #234;
-            background-size: cover;
-            color: #fff;
-            text-align: center;
-            padding: 40px;
-            width: 100%;
-        }
-        h1 {
-            margin: 0;
-            font-family: 'Indie Flower', cursive;
-            color: #ff9900;
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-        .menu-item {
-            width: 25%;
-            background-color: #fff;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 5px;
-            text-align: left;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .menu-item img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-        .menu-item ul {
-            padding: 20px;
-            margin: 0;
-        }
-        .menu-item li {
-            list-style-type: none;
-            margin-bottom: 10px;
-        }
-        .menu-item li.ingredients {
-            color: gray;
-        }
-        .menu-item li.product-title {
-            color: #E94C2B;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .order-button {
-            background-color: #4CAF50; /* Зеленый цвет */
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .cart-button {
-            background-color: #3498db;
-            color: white;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: inline-block;
-            position: absolute;
-            right: 100px;
-            top: 20px;
-        }
-    </style>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <title style="font-family: 'Indie Flower', cursive;">Menu</title>
+
 </head>
+
 <body>
-    <header>
-        <h1>Добро пожаловать в нашу пиццерию!</h1>
-        <button class="cart-button" onclick="location.href='/customer/cart'">Корзина</button>
-        <img src="static/img/1.png" width="50" height="50">
-    </header>
-    <div class="menu">
-        {% for product in products %}
-            <div class="menu-item">
+
+    <div class="container">
+        <header>
+            <h1>Добро пожаловать в нашу пиццерию!</h1>
+            <div class="shopping">
+                        <img src="{% static 'image/shopping.svg' %}">
+                        <span class="quantity">0</span>
+                    </div>
+        </header>
+
+            <div class="list">
+                {% for product in products %}
+            <div class="item">
                 <img src="{{ product.image }}" alt="{{ product.title }}">
                 <ul>
                     <li class="product-title">{{ product.title }}</li>
-                    <li>Большая (0,8–0,9 кг) {{ product.big_price }} руб.
-                        <button class="order-button" onclick="location.href='/customer/{{ product.id }}/big_price'">Заказать</button>
-                    </li>
-                    <li>Стандартная (0,6–0,7 кг) {{ product.medium_price }} руб.
-                        <button class="order-button" onclick="location.href='/customer/{{ product.id }}/medium_price'">Заказать</button>
-                    </li>
-                    <li>Тонкое тесто (0,5–0,6 кг) {{ product.thin_price }} руб.
-                        <button class="order-button" onclick="location.href='/customer/{{ product.id }}/thin_price'">Заказать</button>
-                    </li>
+
+                        <li class="product-size">Большая (0,8–0,9 кг) {{ product.big_price }} руб.
+                            <button onclick="addToCard({{product.id}})">Add To Card</button>`;
+                        </li>
+                        <li class="product-size">Стандартная (0,6–0,7 кг) {{ product.medium_price }} руб.
+                            <button onclick="addToCard({{product.id}})">Add To Card</button>`;
+                        </li>
+
+                        <li class="product-size">Тонкое тесто (0,5–0,6 кг) {{ product.thin_price }} руб.
+                            <button onclick="addToCard({{product.id}})">Add To Card</button>`;
+                        </li>
                     <li class="ingredients">{{ product.ingredients }}</li>
                 </ul>
             </div>
         {% endfor %}
+            </div>
+
+        <div class="card">
+            <h1>Card</h1>
+            <ul class="listCard">
+            </ul>
+            <div class="checkOut">
+                <div class="total">0</div>
+                <div class="closeShopping">Close</div>
+            </div>
+        </div>
+    <script src="{% static 'app.js' %}"></script>
     </div>
 </body>
 </html>

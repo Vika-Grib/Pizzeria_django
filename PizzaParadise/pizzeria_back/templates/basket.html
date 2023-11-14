@@ -1,10 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en - ru">
 <head>
     <meta charset="UTF-8">
-    <title>basket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #234;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            padding: 40px;
+            width: 100%;
+        }
+        h1 {
+            margin: 0;
+            color: #ff9900;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .cart {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .cart-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .cart-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-item img {
+            max-width: 50px;
+            max-height: 50px;
+            margin-right: 10px;
+        }
+        .empty-cart {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .total {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: right;
+        }
+        .checkout-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Корзина</title>
 </head>
 <body>
-
+    <header>
+        <h1>Корзина</h1>
+    </header>
+    <div class="cart">
+        {% if cart %}
+            <ul class="cart-list">
+                {% for item in cart %}
+                    <li class="cart-item">
+                        <img src="{{ item.product.image }}" alt="{{ item.product.title }}">
+                        <div>
+                            <div>Товар ID: {{ item.product.id }}</div>
+                            <div>Количество: {{ item.quantity }}</div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <p class="total">Общая сумма: {{ cart.total_price }} руб.</p>
+            <button class="checkout-button">Оформить заказ</button>
+        {% else %}
+            <p class="empty-cart">Ваша корзина пуста</p>
+        {% endif %}
+    </div>
 </body>
 </html>
