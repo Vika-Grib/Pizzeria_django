@@ -1,15 +1,19 @@
 {
     "type": "table",
     "database": null,
-    "name": "Pizzas",
+    "name": "Menu_product_pizza",
     "withoutRowId": false,
     "strict": false,
-    "ddl": "CREATE TABLE Pizzas (id INTEGER PRIMARY KEY, title TEXT, big_price REAL, medium_price REAL, thin_price REAL, ingredients REAL, photo TEXT);",
+    "ddl": "CREATE TABLE \"Menu_product_pizza\" (\"id\" text NOT NULL PRIMARY KEY, \"title\" text NOT NULL, \"big_price\" decimal NOT NULL, \"medium_price\" decimal NOT NULL, \"thin_price\" decimal NOT NULL, \"ingredients\" text NOT NULL, \"image\" text NOT NULL);",
     "columns": [
         {
             "name": "id",
-            "type": "INTEGER",
+            "type": "text",
             "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL "
+                },
                 {
                     "type": "PRIMARY KEY",
                     "definition": "PRIMARY KEY"
@@ -18,32 +22,68 @@
         },
         {
             "name": "title",
-            "type": "TEXT"
+            "type": "text",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
         },
         {
             "name": "big_price",
-            "type": "REAL"
+            "type": "decimal",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
         },
         {
             "name": "medium_price",
-            "type": "REAL"
+            "type": "decimal",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
         },
         {
             "name": "thin_price",
-            "type": "REAL"
+            "type": "decimal",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
         },
         {
             "name": "ingredients",
-            "type": "REAL"
+            "type": "text",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
         },
         {
-            "name": "photo",
-            "type": "TEXT"
+            "name": "image",
+            "type": "text",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
         }
     ],
     "rows": [
         [
-            3,
+            "1",
             "Ранч пицца",
             24.9,
             20.9,
@@ -52,7 +92,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/3BuPPdePod.jpg"
         ],
         [
-            5,
+            "2",
             "Пицца лисицца",
             27.9,
             22.9,
@@ -61,7 +101,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/BgY2WwBicy.jpg"
         ],
         [
-            6,
+            "3",
             "Сырный цыпленок",
             24.9,
             20.9,
@@ -70,7 +110,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/vZOMxDLfGF.jpg"
         ],
         [
-            8,
+            "4",
             "Гавайская",
             24.9,
             20.9,
@@ -79,7 +119,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/3HHXpMI3QM.jpg"
         ],
         [
-            10,
+            "5",
             "Четыре сезона",
             27.9,
             22.9,
@@ -88,7 +128,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/R128GzqpyF.jpg"
         ],
         [
-            12,
+            "6",
             "Пепперони",
             27.9,
             22.9,
@@ -97,7 +137,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/FY5VYDHHPb.jpg"
         ],
         [
-            14,
+            "7",
             "Филадельфия",
             27.9,
             22.9,
@@ -106,7 +146,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/f8oXJPlPrg.jpg"
         ],
         [
-            15,
+            "8",
             "Грибная",
             24.9,
             20.9,
@@ -115,7 +155,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/wAJLvAAD8W.jpg"
         ],
         [
-            22,
+            "9",
             "Итальянская",
             24.9,
             20.9,
@@ -124,7 +164,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/OEjYqB15Zi.jpg"
         ],
         [
-            23,
+            "10",
             "Мясная",
             30.9,
             24.9,
@@ -133,7 +173,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/jnh89aJNuX.jpg"
         ],
         [
-            24,
+            "11",
             "Чизбургер пицца",
             27.9,
             22.9,
@@ -142,7 +182,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/6F8bwbBNgl.jpg"
         ],
         [
-            25,
+            "12",
             "Цыпленок барбекю",
             24.9,
             20.9,
@@ -151,7 +191,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/ngWJKYs1Aq.jpg"
         ],
         [
-            26,
+            "13",
             "Чесночный цыпленок",
             24.9,
             20.9,
@@ -160,7 +200,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/r2BLwsW9Q2.jpg"
         ],
         [
-            27,
+            "14",
             "Острая чили",
             30.9,
             24.9,
@@ -169,7 +209,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/2oVECh8V0F.jpg"
         ],
         [
-            30,
+            "15",
             "Четыре сыра",
             30.9,
             24.9,
@@ -178,7 +218,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/KQntXlY8Pv.jpg"
         ],
         [
-            31,
+            "16",
             "Деревенская",
             24.9,
             20.9,
@@ -187,7 +227,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/JMYqItJYAB.jpg"
         ],
         [
-            33,
+            "17",
             "Баварская",
             24.9,
             20.9,
@@ -196,7 +236,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/6sIPcLXJ3b.jpg"
         ],
         [
-            34,
+            "18",
             "Колбаски барбекю",
             24.9,
             20.9,
@@ -205,7 +245,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/4Fm1N121TG.jpg"
         ],
         [
-            35,
+            "19",
             "Цыпленок дорблю",
             30.9,
             24.9,
@@ -214,7 +254,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/pogU0diHlR.jpg"
         ],
         [
-            40,
+            "20",
             "Грибной цыпленок",
             27.9,
             22.9,
@@ -223,7 +263,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/3cLYPzhQCV.jpg"
         ],
         [
-            41,
+            "21",
             "Украинская",
             27.9,
             22.9,
@@ -232,7 +272,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/XplHJYonQS.jpg"
         ],
         [
-            51,
+            "22",
             "Французский цыпленок",
             24.9,
             20.9,
@@ -241,7 +281,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/UpVgrLdhUo.jpg"
         ],
         [
-            61,
+            "23",
             "Кантри четыре сезона",
             30.9,
             24.9,
@@ -250,7 +290,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/t0Vp8VHSgL.jpg"
         ],
         [
-            67,
+            "24",
             "Салями, ветчина и грибы",
             24.9,
             20.9,
@@ -259,7 +299,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/pHLjH2ESEo.jpg"
         ],
         [
-            69,
+            "25",
             "Вегетарианская",
             27.9,
             22.9,
@@ -268,7 +308,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/vSWgoAlbtt.jpg"
         ],
         [
-            76,
+            "26",
             "Биф тейсти",
             30.9,
             24.9,
@@ -277,7 +317,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/hDdeREJ6nE.jpg"
         ],
         [
-            89,
+            "27",
             "Карбонара",
             27.9,
             22.9,
@@ -286,7 +326,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/wDoP65bLUK.jpg"
         ],
         [
-            92,
+            "28",
             "Цыпленок пепперони",
             27.9,
             22.9,
@@ -295,7 +335,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/w2obUa8q7t.jpg"
         ],
         [
-            93,
+            "29",
             "Пепперони с соусом бургер",
             24.9,
             20.9,
@@ -304,7 +344,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/0SJ321VuOl.jpg"
         ],
         [
-            94,
+            "30",
             "Цыпленок пармеджано с хрустящим луком",
             30.9,
             24.9,
@@ -313,7 +353,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/nckizeyDyX.jpg"
         ],
         [
-            95,
+            "31",
             "Ветчина, грудинка и колбаски",
             27.9,
             22.9,
@@ -322,7 +362,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/Ca4RqSdaY1.jpg"
         ],
         [
-            96,
+            "32",
             "Опята, шампиньоны и колбаски",
             27.9,
             22.9,
@@ -331,7 +371,7 @@
             "https:\/\/app.pzzby.com\/uploads\/photos\/JcqNyRftES.jpg"
         ],
         [
-            97,
+            "33",
             "Барбекю с хрустящим луком",
             30.9,
             24.9,

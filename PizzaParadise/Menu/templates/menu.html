@@ -7,6 +7,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+
+        .item {
+            width: 90%;
+            margin-bottom: 20px;
+        }
+
+        .item img {
+            width: 100px; /* нужная ширина в пикселях */
+            height: 50px; /* нужная высота в пикселях */
+            max-width: 300px; /* Максимальная ширина в пикселях */
+            max-height: 100px; /* Максимальная высота в пикселях */
+        }
+
+        /* Убираем маркеры у списков */
+        .list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .list .item ul li.product-title {
+            font-family: 'Indie Flower', cursive; /* Применяем красивый шрифт */
+            font-size: 24px;
+            font-weight: bold;
+            color: #E94C2B;
+        }
+
+        /* Оставляем маркер только у заголовков */
+        .list .item ul li.product-title::before {
+            content: '\2022'; /* Юникод для круглой точки в качестве маркера */
+            color: #1C1F25; /* Цвет маркера, если нужно изменить */
+            display: inline-block;
+            width: 1em; /* Пространство между маркером и текстом */
+            margin-left: -1em; /* Делаем маркер "невидимым", но оставляем пространство */
+        }
+
+        .list .item ul li.product-title,
+        .list .item ul li.product-size {
+            font-size: 15px; /* размер основного текста  */
+        }
+
+        .list .item ul li.ingredients {
+            color: #808080;
+            font-size: 14px; /*  размер текста */
+        }
+
+        .active .container{
+           transform: translateX(-200px);
+         }
+
+        .active .card{
+            left: calc(100% + 10%);
+        }
+
+    </style>
     <title style="font-family: 'Indie Flower', cursive;">Menu</title>
 
 </head>
@@ -30,14 +85,14 @@
                     <li class="product-title">{{ product.title }}</li>
 
                         <li class="product-size">Большая (0,8–0,9 кг) {{ product.big_price }} руб.
-                            <button onclick="addToCard({{product.id}})">Add To Card</button>`;
+                            <button onclick="addToCard({{product.id}}, {{product.big_price}}, 2)">Add To Card</button>`
                         </li>
                         <li class="product-size">Стандартная (0,6–0,7 кг) {{ product.medium_price }} руб.
-                            <button onclick="addToCard({{product.id}})">Add To Card</button>`;
+                            <button onclick="addToCard({{product.id}}, {{product.medium_price}}, 3)">Add To Card</button>`
                         </li>
 
                         <li class="product-size">Тонкое тесто (0,5–0,6 кг) {{ product.thin_price }} руб.
-                            <button onclick="addToCard({{product.id}})">Add To Card</button>`;
+                            <button onclick="addToCard({{product.id}}, {{product.thin_price}}, 4)">Add To Card</button>`
                         </li>
                     <li class="ingredients">{{ product.ingredients }}</li>
                 </ul>

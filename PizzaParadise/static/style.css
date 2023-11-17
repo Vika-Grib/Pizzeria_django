@@ -71,9 +71,7 @@ header .shopping span{
     height: 100vh;
     transition: 0.5s;
 }
-.active .card{
-    left: calc(100% - 500px);
-}
+
 .active .container{
    transform: translateX(-200px);
 }
