@@ -84,6 +84,7 @@ function reloadCard(){
     })
     total.innerText = totalPrice.toLocaleString() + '0';
     quantity.innerText = count;
+
     return max_key_1
 }
 
@@ -96,3 +97,4 @@ function changeQuantity(key, quantity, price){   // если мы ум коли�
     }
     reloadCard();
 }
+

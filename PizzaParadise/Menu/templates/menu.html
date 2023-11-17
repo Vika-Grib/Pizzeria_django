@@ -8,8 +8,21 @@
 
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
+        header {
+            position: relative;
+            background-color: #FC6619;
+            padding: 10px;
+            text-align: right;
+            color: #fff;
+            text-align: left;
+            background-image: url('{% static "fruit-basket-agency-caH-ZLrisZA-unsplash.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
-        .item {
+
+         .item {
             width: 90%;
             margin-bottom: 20px;
         }
@@ -19,6 +32,8 @@
             height: 50px; /* нужная высота в пикселях */
             max-width: 300px; /* Максимальная ширина в пикселях */
             max-height: 100px; /* Максимальная высота в пикселях */
+            margin-bottom: -12px;
+            border-bottom: 1px solid #ccc; /* Добавляем тонкую линию с цветом #ccc */
         }
 
         /* Убираем маркеры у списков */
@@ -28,29 +43,61 @@
         }
 
         .list .item ul li.product-title {
-            font-family: 'Indie Flower', cursive; /* Применяем красивый шрифт */
-            font-size: 24px;
+            font-family: 'Baloo Thambi 2', cursive; /* Применяем красивый шрифт */
+            font-size: 28px;
             font-weight: bold;
             color: #E94C2B;
+            margin-top: 0; /*  чтобы убрать верхний отступ */
+            margin-bottom: 10px; /* чтобы изменить расстояние между названием и изображением */
         }
 
-        /* Оставляем маркер только у заголовков */
-        .list .item ul li.product-title::before {
-            content: '\2022'; /* Юникод для круглой точки в качестве маркера */
-            color: #1C1F25; /* Цвет маркера, если нужно изменить */
-            display: inline-block;
-            width: 1em; /* Пространство между маркером и текстом */
-            margin-left: -1em; /* Делаем маркер "невидимым", но оставляем пространство */
-        }
-
-        .list .item ul li.product-title,
         .list .item ul li.product-size {
             font-size: 15px; /* размер основного текста  */
+            margin-bottom: 10px; /* увеличение расстояния между каждым размером пиццы и кнопкой */
+        }
+
+        .list .item button {
+            background-color: #ffffff; /* белый цвет фона */
+            margin-top: 1px; /* увеличение расстояния между кнопкой и следующим элементом (если есть) */
+        }
+
+        .list .item button {
+            margin-top: 10px; /*  значение отступа */
+            background-color: #FA9F25 ; /* цвет фона кнопки #655147 */
+            color: #FAF0EE; /* цвет текста кнопки */
+            padding: 10px 80px; /* Изменить отступы для кнопок, если необходимо */
+            border: none; /* Убрать границу для более чистого вида */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s; /* Добавляет эффект перехода для более плавного изменения */
+            border-radius: 10px; /* добавляем закругление углов */
+            font-weight: bold; /* Делаем текст жирным */
+            font-family: 'fantasy', sans-serif;
+        }
+
+        .list .item button:hover {
+            background-color: #E94C2B; /* цвет фона при наведении курсора */
+            color: #fff; /* цвет текста при наведении курсора */
         }
 
         .list .item ul li.ingredients {
             color: #808080;
             font-size: 14px; /*  размер текста */
+        }
+
+        .list .item{
+            text-align: center;
+            background-color: #FEFEFE ;
+            padding: 20px;
+            box-shadow: 0 50px 50px #757676;
+            letter-spacing: 1px;
+            background: linear-gradient(to bottom, #FEFEFE, #FEECE5); /* градиент от белого к слегка темному цвету внизу */
+        }
+
+        .container{
+            width: 1000px;
+            margin: auto;
+            transition: 0.5s;
+
         }
 
         .active .container{
@@ -59,6 +106,46 @@
 
         .active .card{
             left: calc(100% + 10%);
+        }
+
+
+        /* Блок стилей для подсветки корзины */
+        header .shopping {
+            position: absolute; /* Changed */
+            top: 10px; /* Adjusted top position */
+            right: 10px; /* Added right position */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header .shopping:hover {
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* Меньший радиус и меньшая интенсивность тени */
+            color: #1C1F25; /* Цвет текста при наведении */
+
+
+            /*background-color: #FFDAB9; /* Персиковый цвет */
+            color: #1C1F25; /* Цвет текста при наведении */
+            border-radius: 40%; /* Закругление углов для создания круглой формы */
+            padding: 5px; /* Увеличение или уменьшение отступа, чтобы подсветка была меньше */
+            opacity: 0.8; /* Прозрачность (от 0 до 1) */
+            padding: 3px; /* Увеличение или уменьшение отступа, чтобы подсветка была меньше */
+            margin-left: -5px; /* Сдвигаем подсветку влево (уменьшайте значение, чтобы сдвиг был больше) */*/
+        }
+
+       .card {
+            position: fixed;
+            top: 0;
+            left: 100%;
+            width: 500px;
+            background-color: #453E3B;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: 0.5s;
+        }
+
+        .listCard {
+            flex-grow: 1;
+            overflow-y: auto; /* Добавляем вертикальную прокрутку, если содержимое превышает высоту контейнера */
         }
 
     </style>
@@ -70,6 +157,7 @@
 
     <div class="container">
         <header>
+
             <h1>Добро пожаловать в нашу пиццерию!</h1>
             <div class="shopping">
                         <img src="{% static 'image/shopping.svg' %}">
@@ -85,14 +173,14 @@
                     <li class="product-title">{{ product.title }}</li>
 
                         <li class="product-size">Большая (0,8–0,9 кг) {{ product.big_price }} руб.
-                            <button onclick="addToCard({{product.id}}, {{product.big_price}}, 2)">Add To Card</button>`
+                            <button onclick="addToCard({{product.id}}, {{product.big_price}}, 2)">Add To Card</button>
                         </li>
                         <li class="product-size">Стандартная (0,6–0,7 кг) {{ product.medium_price }} руб.
-                            <button onclick="addToCard({{product.id}}, {{product.medium_price}}, 3)">Add To Card</button>`
+                            <button onclick="addToCard({{product.id}}, {{product.medium_price}}, 3)">Add To Card</button>
                         </li>
 
                         <li class="product-size">Тонкое тесто (0,5–0,6 кг) {{ product.thin_price }} руб.
-                            <button onclick="addToCard({{product.id}}, {{product.thin_price}}, 4)">Add To Card</button>`
+                            <button onclick="addToCard({{product.id}}, {{product.thin_price}}, 4)">Add To Card</button>
                         </li>
                     <li class="ingredients">{{ product.ingredients }}</li>
                 </ul>
