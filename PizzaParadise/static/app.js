@@ -84,6 +84,8 @@ function reloadCard(){
     })
     total.innerText = 'К оплате: ' + totalPrice.toLocaleString() + '0';
     quantity.innerText = count;
+    const totalAmountHeaderElement = document.querySelector('.total-amount-header');
+    totalAmountHeaderElement.innerText = totalPrice.toLocaleString() + '0';
 
     return max_key_1
 }
