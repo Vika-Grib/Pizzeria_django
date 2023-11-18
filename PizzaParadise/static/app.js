@@ -100,3 +100,14 @@ function changeQuantity(key, quantity, price){   // если мы ум коли�
     reloadCard();
 }
 
+function add_to_cart_button(){
+    let new_list_cards_for_button = []
+    listCards.forEach((value, key)=>{
+    if(value != null){
+        let new_listcard_item = {'id': key, 'price': value.price.toLocaleString(), 'title': value[1], 'size': value.size, 'img': value[6]}
+        new_list_cards_for_button[key] = JSON.stringify(new_listcard_item);
+        console.log(new_list_cards_for_button)
+}
+    })
+    localStorage.setItem("inputValue", new_list_cards_for_button);
+}

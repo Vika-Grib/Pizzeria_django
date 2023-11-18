@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en - ru">
 <head>
+    {% load static %}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -86,11 +90,44 @@
                     </li>
                 {% endfor %}
             </ul>
-            <p class="total">Общая сумма: {{ cart.total_price }} руб.</p>
+            <div class="total"> </div>
+            <input class="address" placeholder="Введите ваш адрес: ">
+            <input class="mail" placeholder="Введите ваш mail: ">
+
             <button class="checkout-button">Оформить заказ</button>
         {% else %}
             <p class="empty-cart">Ваша корзина пуста</p>
         {% endif %}
+
+    <script> var order_products = localStorage.getItem("inputValue")
+    let listCard = document.querySelector('.cart-list');
+    order_products = order_products.slice(1, -1)
+    console.log(order_products)
+    let new_order_products = order_products.split('},{');
+    console.log(new_order_products)
+    listCard.innerHTML = '';
+    let count = 0;
+    let totalPrice = 0;
+    let total = document.querySelector('.total');
+    new_order_products.forEach((value, key)=>{
+        new_value = '{' + value + '}';
+        value = JSON.parse(new_value);
+        console.log(value)
+        totalPrice = parseFloat(totalPrice) + parseFloat(value.price);
+        count = count + value.quantity;
+        let newDiv = document.createElement('li');
+        newDiv.innerHTML = `
+            <div><img src=${value.img}></div>
+            <div>${value.title}</div>
+            <div>${value.price}0</div>
+            <div>${value.size}</div>`;
+            listCard.appendChild(newDiv);
+    })
+    total.innerText = 'К оплате: ' + totalPrice.toLocaleString() + '0';
+
+    </script>
     </div>
 </body>
 </html>
+
+
