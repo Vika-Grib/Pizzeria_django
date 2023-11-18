@@ -82,7 +82,7 @@ function reloadCard(){
                 listCard.appendChild(newDiv); //listCard - отвечает за то, что хранит в себе часть кода от корзины и мы можем +- пиццы
         }
     })
-    total.innerText = totalPrice.toLocaleString() + '0';
+    total.innerText = 'К оплате: ' + totalPrice.toLocaleString() + '0';
     quantity.innerText = count;
 
     return max_key_1

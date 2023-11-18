@@ -28,10 +28,10 @@
         }
 
         .item img {
-            width: 100px; /* нужная ширина в пикселях */
-            height: 50px; /* нужная высота в пикселях */
-            max-width: 300px; /* Максимальная ширина в пикселях */
-            max-height: 100px; /* Максимальная высота в пикселях */
+            width: 300px; /* нужная ширина в пикселях */
+            height: 150px; /* нужная высота в пикселях */
+            max-width: 600px; /* Максимальная ширина в пикселях */
+            max-height: 400px; /* Максимальная высота в пикселях */
             margin-bottom: -12px;
             border-bottom: 1px solid #ccc; /* Добавляем тонкую линию с цветом #ccc */
         }
@@ -94,7 +94,7 @@
         }
 
         .container{
-            width: 1000px;
+            width: 1100px;
             margin: auto;
             transition: 0.5s;
 
@@ -111,9 +111,9 @@
 
         /* Блок стилей для подсветки корзины */
         header .shopping {
-            position: absolute; /* Changed */
-            top: 10px; /* Adjusted top position */
-            right: 10px; /* Added right position */
+            position: absolute;
+            top: 10px;
+            right: 10px;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -131,6 +131,13 @@
             margin-left: -5px; /* Сдвигаем подсветку влево (уменьшайте значение, чтобы сдвиг был больше) */*/
         }
 
+        .card h1 {
+            font-weight: 300; /* Устанавливаем тонкий шрифт */
+            color: #FFD700; /* Желтый цвет текста */
+            font-family: 'Roboto', sans-serif; /* Указываем ваш шрифт или используем sans-serif для стандартного шрифта без засечек */
+        }
+
+
        .card {
             position: fixed;
             top: 0;
@@ -143,10 +150,11 @@
             transition: 0.5s;
         }
 
-        .listCard {
-            flex-grow: 1;
-            overflow-y: auto; /* Добавляем вертикальную прокрутку, если содержимое превышает высоту контейнера */
-        }
+
+       .listCard {
+           flex-grow: 1;
+           overflow-y: auto; /* Добавляем вертикальную прокрутку, если содержимое превышает высоту контейнера */
+       }
 
     </style>
     <title style="font-family: 'Indie Flower', cursive;">Menu</title>
@@ -158,7 +166,7 @@
     <div class="container">
         <header>
 
-            <h1>Добро пожаловать в нашу пиццерию!</h1>
+            <h1>Пиццерия Paradise</h1>
             <div class="shopping">
                         <img src="{% static 'image/shopping.svg' %}">
                         <span class="quantity">0</span>
@@ -189,12 +197,12 @@
             </div>
 
         <div class="card">
-            <h1>Card</h1>
+            <h1>Корзина</h1>
             <ul class="listCard">
             </ul>
             <div class="checkOut">
                 <div class="total">0</div>
-                <div class="closeShopping">Close</div>
+                <div class="closeShopping">Закрыть</div>
             </div>
         </div>
     <script src="{% static 'app.js' %}"></script>
