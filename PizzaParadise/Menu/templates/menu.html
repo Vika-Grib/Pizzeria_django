@@ -19,6 +19,23 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            display: flex; /* Добавлено свойство flex для управления расположением дочерних элементов */
+            justify-content: space-between; /* Равномерное распределение пространства между элементами */
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .total-header {
+            margin-right: 10px;
+            margin-top: 80px;
         }
 
 
@@ -135,6 +152,7 @@
             font-weight: 300; /* Устанавливаем тонкий шрифт */
             color: #FFD700; /* Желтый цвет текста */
             font-family: 'Roboto', sans-serif; /* Указываем ваш шрифт или используем sans-serif для стандартного шрифта без засечек */
+            margin-left: 30px; /* Добавляем отступ слева для слова Корзина */
         }
 
 
