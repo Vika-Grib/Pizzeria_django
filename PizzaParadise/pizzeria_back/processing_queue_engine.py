@@ -1,7 +1,6 @@
 # coding=utf-8
 import time
 import zmq
-import json
 import sqlite3
 import asyncio
 
@@ -22,22 +21,19 @@ def work_with_active_orders_db(active_orders):
     cursor.execute(f'''UPDATE active_orders SET active_orders={active_orders}''')
     conn.commit()
 
-# python manage.py runserver
-
 
 def cooking(message):  # не отправляет сам заказ, а просто готовит заказы (ум их количество)
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
     cursor = conn.cursor()
     cursor.execute('SELECT * from active_orders')
     active_orders = list(cursor.fetchall())[0][0]
-    send_to_notify(message,'cooking')
+    send_to_notify(message,'В печи')
     time.sleep(3)
     if active_orders >= 1:
         active_orders -= 1
         work_with_active_orders_db(active_orders)
-        print('*', 'cooked!', '*')
         send_to_next_queue(message)
-        send_to_notify(message, 'cooked!')
+        send_to_notify(message, 'Пицца готова')
 
 
 async def processing(socket, active_orders): # добавляет заказы в бд
@@ -90,7 +86,7 @@ def send_to_notify(message, status): # эта ф-ция переход на но
     context = zmq.Context()
     socket = context.socket(zmq.PUSH)  # пушем отправляем, а пулэм забираем сообщение уже в процессинге
     socket.connect("tcp://localhost:5552")
-    order_id = message['id']
+    order_id = message['unique_id']
     notification = {'order_id': order_id, 'status': status}
     socket.send_json(notification)
     print(f"Send to notify [ {notification} ]")

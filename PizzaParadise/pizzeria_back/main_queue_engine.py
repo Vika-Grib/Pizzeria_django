@@ -1,8 +1,6 @@
 # coding=utf-8
-
 import time
 import zmq
-import json
 import sqlite3
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -24,23 +22,18 @@ def tr():
         #  Wait for next request from client
         message = socket.recv_json()  # запрос на то что мы получим сообщение, запускается постоянно - через ctrl+C нельзя было остановить сервер и следовательно след команда, кот.останавливает цикл
 
-        if message["id"] == -1:  #чтобы не менять директорию - на случай если нужно остановить сервер - сами отправляем -1
-            print("break")
-            break
-        elem = message   # на случай если получим не только json, но и сообщение какое-нибудь
-        print(f"Received request: {elem}")
-
         #  Do some 'work' - занимает время на обработку и ему нужна 1 сек, чтобы делать что-то дальше
         time.sleep(1)
-        order_confirmed = check_order(elem['id'])
-
+        order_confirmed = check_order(message['order_id'])
+        message['unique_id'] = str(message['order_id']) + '_' + str(message['id'])
         if order_confirmed:
-            schedule_1(message, 'accepted')
+            schedule_1(message, 'Принят')
             print("sending to DB")
-            send_to_db(elem)
+            message['status'] = 'Принят!'
+            send_to_db(message)
             #  Send reply back to client
             socket.send(b"Your order confirmed and accepted!")
-            send_to_next_queue(elem)  # после того как отправили в БД, мы также отправляем в след очередь
+            send_to_next_queue(message)  # после того как отправили в БД, мы также отправляем в след очередь
         else:
             schedule_1(message, 'unconfirmed')
             #  Send reply back to client
@@ -65,8 +58,8 @@ def send_to_db(message):
     #conn = sqlite3.connect('F:\\Pizza\\PizzaParadise\\db.sqlite3')
     # Создаем объект cursor, который позволяет нам взаимодействовать с базой данных и добавлять записи
     cursor = conn.cursor()
-    cursor.execute('''INSERT INTO customer_order(title, ingredients, big_price, medium_price, thin_price, image, id, status) VALUES (?,?,?,?,?,?,?,?)''',
-                   (message['title'], message['ingredients'], message['big_price'], message['medium_price'], message['thin_price'], message['image'], message['id'], message['status']))
+    cursor.execute('''INSERT INTO customer_order(unique_id, price, title, size, image, order_id, status, pizza_id) VALUES (?,?,?,?,?,?,?,?)''',
+                   (message['unique_id'], message['price'], message['title'], message['size'], message['img'], message['order_id'], message['status'], message['id']))
     conn.commit()
 # python manage.py runserver
 
@@ -77,7 +70,7 @@ def send_to_notify(message, status): # эта ф-ция переход на но
     socket = context.socket(zmq.PUSH)  # пушем отправляем, а пулэм забираем сообщение уже в процессинге
     socket.connect("tcp://localhost:5552")
     print(message)
-    order_id = message['id']
+    order_id = message['unique_id']
     notification = {'order_id': order_id, 'status': status}
     socket.send_json(notification)
     print(f"Send to notify [ {notification} ]")

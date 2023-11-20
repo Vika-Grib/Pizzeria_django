@@ -31,14 +31,14 @@ def transfering(message):
     cursor = conn.cursor()
     cursor.execute('SELECT * from active_orders')
     transfer_orders = list(cursor.fetchall())[0][1]
-    send_to_notify(message, 'Delivering')  # отправили курьером
+    send_to_notify(message, 'Курьер в пути!')  # отправили курьером
     trancfering_time = random.randint(3,12)
     time.sleep(trancfering_time)
     if transfer_orders >= 1:
         transfer_orders -= 1
         work_with_transfer_orders_db(transfer_orders)
         print('*', 'Transfering!', '*', 'Доставлено за время: ', trancfering_time)
-        send_to_notify(message, 'Delivered')
+        send_to_notify(message, 'Заказ доставлен!')
 
 
 async def processing_transferinga(socket, transfer_orders):
@@ -80,7 +80,7 @@ def send_to_notify(message, status): # эта ф-ция переход на но
     context = zmq.Context()
     socket = context.socket(zmq.PUSH)  # пушем отправляем, а пулэм забираем сообщение уже в процессинге
     socket.connect("tcp://localhost:5552")
-    order_id = message['id']
+    order_id = message['unique_id']
     notification = {'order_id': order_id, 'status': status}
     socket.send_json(notification)
     print(f"Send to notify [ {notification} ]")

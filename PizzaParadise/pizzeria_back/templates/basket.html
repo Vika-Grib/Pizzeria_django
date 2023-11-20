@@ -91,13 +91,15 @@
                 {% endfor %}
             </ul>
             <div class="total"> </div>
-            <input class="address" placeholder="Введите ваш адрес: ">
-            <input class="mail" placeholder="Введите ваш mail: ">
 
-            <button class="checkout-button">Оформить заказ</button>
+            <form class="order_data" action="customer/add_to_cart" method="POST" name="order_data">
+                {% csrf_token %}
+            </form>
+
         {% else %}
             <p class="empty-cart">Ваша корзина пуста</p>
         {% endif %}
+
 
     <script> var order_products = localStorage.getItem("inputValue")
     let listCard = document.querySelector('.cart-list');
@@ -109,6 +111,21 @@
     let count = 0;
     let totalPrice = 0;
     let total = document.querySelector('.total');
+    let order_data = document.querySelector('.order_data');
+    order_data.innerHTML = '';
+    let newForm = document.createElement('div');
+    newForm.innerHTML = `
+            <input name="address" class="order-info" placeholder="Введите ваш адрес: ">
+            <input name="mail" class="order-info" placeholder="Введите ваш mail: ">
+
+            <input type="radio" id="card" name="payment" value="card">
+            <label for="card">Оплата картой</label><br>
+            <input type="radio" id="cash" name="payment" value="cash">
+            <label for="cash">Оплата наличными</label><br>
+
+            <button class="checkout-button">Оформить заказ</button>
+            <input name="hidden_data" type="hidden" value='{${order_products}}' >`;
+            order_data.appendChild(newForm);
     new_order_products.forEach((value, key)=>{
         new_value = '{' + value + '}';
         value = JSON.parse(new_value);

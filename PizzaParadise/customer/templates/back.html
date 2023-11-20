@@ -50,19 +50,19 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Ingredients</th>
-                <th>Status</th>
+                <th>Номер заказа</th>
+                <th>Название пиццы</th>
+                <th>Цена</th>
+                <th>Статус</th>
             </tr>
         </thead>
         <tbody>
             {% for product in products %}
                 <tr>
-                    <td>{{ product.id }}</td>
+                    <td>{{ product.unique_id }}</td>
+                    <td>{{ product.order_id }}</td>
                     <td>{{ product.title }}</td>
-                    <td>{{ product.big_price }}</td>
-                    <td>{{ product.ingredients }}</td>
+                    <td>{{ product.price}}</td>
                     <td>{{ product.status }}</td>
                 </tr>
             {% endfor %}

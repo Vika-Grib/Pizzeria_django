@@ -1,12 +1,9 @@
 # coding=utf-8
 import time
 import zmq
-import json
 import sqlite3
 import asyncio
-import random
-import smtplib
-import mailtrap as mt
+
 
 from apscheduler.schedulers.background import BackgroundScheduler
 # импорт фонового расписания задач - чтобы вместе с django запускался этот код
@@ -50,13 +47,13 @@ def schedule_1(message): # отвечает за работу доставки!
 
 
 def notify(message):
-    order_id = message['order_id']
+    unique_id = message['order_id']
     status = message['status']
-    update_status(order_id, status)
+    update_status(unique_id, status)
 
 
 def update_status(order_id, status):
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
     cursor = conn.cursor()
-    cursor.execute(f'UPDATE customer_order SET status="{status}" WHERE id={order_id}')
+    cursor.execute(f'UPDATE customer_order SET status="{status}" WHERE unique_id="{order_id}"')
     conn.commit()
