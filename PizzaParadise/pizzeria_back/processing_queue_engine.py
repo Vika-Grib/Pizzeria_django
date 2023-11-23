@@ -10,8 +10,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 # added schedule, ensure its only done once - см. в APPS.PY, благодаря ему запускается очередь
 def schedule():
     scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2}) # ув максимального количества заданий - такого условия не достигнем, скорее гибкость (на случай такого же сообщения, но ткт запускается 1 раз - то..)
-    if not scheduler.get_job('get_message'):  #добавляет гибкости,  проверка чтобы уже не выполняло такое же задание
-        scheduler.add_job(tr, id='get_message')
+    if not scheduler.get_job('get_message1'):  #добавляет гибкости,  проверка чтобы уже не выполняло такое же задание
+        scheduler.add_job(tr, id='get_message1')
         scheduler.start()
 
 
@@ -23,12 +23,12 @@ def work_with_active_orders_db(active_orders):
 
 
 def cooking(message):  # не отправляет сам заказ, а просто готовит заказы (ум их количество)
+    send_to_notify(message,'В печи')
+    time.sleep(10)
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
     cursor = conn.cursor()
     cursor.execute('SELECT * from active_orders')
-    active_orders = list(cursor.fetchall())[0][0]
-    send_to_notify(message,'В печи')
-    time.sleep(3)
+    active_orders = list(cursor.fetchall())[0][0]  # наши печки, которые готовят
     if active_orders >= 1:
         active_orders -= 1
         work_with_active_orders_db(active_orders)
@@ -49,7 +49,7 @@ async def processing(socket, active_orders): # добавляет заказы �
     time.sleep(1)
 
 def schedule_1(message, active_orders): # отвечает за работу печки!
-    # print('IN!')
+    print('IN!')
 
     scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2}) # запускаем асинхронно кукинг готовку и дальше мы могли принимать новые пиццы
     # if not scheduler.get_job('process'):
@@ -66,9 +66,8 @@ def tr():
     while True:
         cursor.execute('SELECT * from active_orders')
         active_orders = list(cursor.fetchall())[0][0]
-        #print('A_O ', active_orders)
-        a = False
-        if active_orders < 5:  # запускаем процессинг когда меньше 5
+        print('A_O ', active_orders)
+        if active_orders < 7:  # запускаем процессинг когда меньше 5
             asyncio.run(processing(socket, active_orders))  # когда происходит asyncio.run асинхр процесс, то обновляет значения в work_proc_bd
             print('active_orders: ', active_orders)
         else:

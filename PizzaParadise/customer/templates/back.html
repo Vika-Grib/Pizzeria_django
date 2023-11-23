@@ -8,24 +8,62 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+
         }
 
         h1 {
             color: #333;
             font-size: 32px;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 10px;
-    padding: 15px; /* Отступ внутри заголовка */
-    background-color: #C6482E; /* Цвет подложки */
-    color: white; /* Цвет текста */
-    width: 100%; /* Ширина подложки - 100% ширины родительского контейнера */
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            padding: 15px; /* Отступ внутри заголовка */
+            background-color: #C6482E; /* Цвет подложки */
+            color: white; /* Цвет текста */
+            width: 100%; /* Ширина подложки - 100% ширины родительского контейнера */
         }
+
+        .header-container {
+            max-width: 1550px; /* Максимальная ширина шапки */
+            width: 100%; /* Ширина занимает 100% от доступной ширины */
+            margin: 0 auto; /* Центрирование шапки по горизонтали */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #C6482E;
+            color: white;
+        }
+
+
+        .main-button {
+            margin-left: auto; /* Автоматический отступ слева, выравнивает элемент справа */
+        }
+
+        .main-button a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            background-color: #e67e22;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-left: -80px;
+        }
+
+        .main-button a:hover {
+            background-color: #FDC861;  /* Оранжевый цвет фона при наведении */
+            color: #2980b9;
+        }
+
 
         table {
             width: 80%;
             border-collapse: collapse;
             margin-top: 20px;
+            margin: 20px auto; /* добавлено свойство margin и значение auto для центрирования по горизонтали */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавление тени */
+            border-radius: 10px; /* Закругление углов */
         }
 
         th, td {
@@ -37,15 +75,32 @@
         th {
             background-color: #4CAF50;
             color: white;
+            padding: 12px; /* Увеличение отступов для лучшего визуального эффекта */
+            text-align: left;
+            border: 1px solid #ddd; /* Добавление границы для лучшего разделения ячеек */
         }
 
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
+        tr:hover {
+            background-color: #e0e0e0; /* Изменение цвета при наведении */
+            transition: background-color 0.3s ease; /* Добавление плавности анимации */
+        }
+
     </style>
 </head>
 <body>
-    <h1>pizzeria_back!!! Заказы и их статус! Админка.</h1>
+    <div class="header-container">
+        <h1> Заказы </h1>
+            <div class="main-button">
+                <h2><a href="../main">На главную</a></h2>
+            </div>
+    </div>
+
+
+
     <table>
         <thead>
             <tr>
@@ -62,7 +117,7 @@
                     <td>{{ product.unique_id }}</td>
                     <td>{{ product.order_id }}</td>
                     <td>{{ product.title }}</td>
-                    <td>{{ product.price}}</td>
+                    <td>{{ product.price }}</td>
                     <td>{{ product.status }}</td>
                 </tr>
             {% endfor %}

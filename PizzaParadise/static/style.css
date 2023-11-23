@@ -73,9 +73,26 @@ header .shopping span{
     font-weight: bold;
     cursor: pointer;
 }
+
 .card .checkOut div:nth-child(2){
     background-color: #1C1F25;
     color: #fff;
+}
+
+.checkOut button {
+    background-color: #E8BC0E;
+    border: none;
+    padding: 0; /* Убираем стандартный внутренний отступ */
+    margin: 0; /* Убираем стандартные внешние отступы */
+    width: 100%; /* Растягиваем кнопку на всю ширину */
+}
+
+.checkOut a {
+    background-color: #E8BC0E;
+    text-decoration: none; /* Убираем подчеркивание по умолчанию */
+    color: #1C1F25; /* Цвет текста */
+    display: block; /* Делаем ссылку блочным элементом, чтобы она занимала всю ширину */
+    height: 100%; /* Занимаем всю высоту родительского элемента */
 }
 
 .listCard li{
@@ -99,3 +116,4 @@ header .shopping span{
 .listCard .count{
     margin: 0 10px;
 }
+

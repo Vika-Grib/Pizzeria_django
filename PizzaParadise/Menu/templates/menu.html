@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
         header {
-            position: relative;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
             background-color: #FC6619;
             padding: 10px;
             text-align: right;
@@ -21,6 +23,10 @@
             background-repeat: no-repeat;
             display: flex; /* Добавлено свойство flex для управления расположением дочерних элементов */
             justify-content: space-between; /* Равномерное распределение пространства между элементами */
+            z-index: 1000; /* Устанавливаем высокий z-index, чтобы шапка оставалась поверх остального контента */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6); /* Добавляем тень: горизонтальное смещение, вертикальное смещение, размытие, цвет */
+            width: 98.8%; /* Ширина 100% */
+
         }
 
         .header-left {
@@ -156,23 +162,53 @@
         }
 
 
-       .card {
-            position: fixed;
-            top: 0;
-            left: 100%;
-            width: 500px;
-            background-color: #453E3B;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: 0.5s;
+        .card {
+             position: fixed;
+             top: 0;
+             left: 100%;
+             width: 500px;
+             background-color: #453E3B;
+             height: 100vh;
+             display: flex;
+             flex-direction: column;
+             transition: 0.5s;
         }
 
 
-       .listCard {
-           flex-grow: 1;
-           overflow-y: auto; /* Добавляем вертикальную прокрутку, если содержимое превышает высоту контейнера */
-       }
+        .listCard {
+            flex-grow: 1;
+            overflow-y: auto; /* Добавляем вертикальную прокрутку, если содержимое превышает высоту контейнера */
+            padding-left: 20px; /* Уменьшаем отступ слева */
+        }
+
+        .listCard li{
+            display: grid;
+            grid-template-columns: 100px repeat(4, 1fr);
+            color: #fff;
+            row-gap: 10px;
+            margin-bottom: 20px; /* Добавлен отступ снизу для каждого элемента списка */
+        }
+
+        .listCard li button{
+            background-color: #fff5;
+            border: none;
+        }
+
+        .listCard .count{
+            margin: 0 10px; /*кнопки + - количество пицц */
+        }
+
+
+        .listCard li div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .listCard li img{
+           width: 90%;
+        }
+
 
     </style>
     <title style="font-family: 'Indie Flower', cursive;">Menu</title>
@@ -190,6 +226,16 @@
                         <img src="{% static 'image/shopping.svg' %}">
                         <span class="quantity">0</span>
                     </div>
+
+            <div class="card">
+            <h1>Корзина</h1>
+            <ul class="listCard">
+            </ul>
+            <div class="checkOut">
+               <button id="to_pay_button" onclick="add_to_cart_button()"> <a href="../customer/"><div id="total" class="total">0 </div></a></button>  <!-- кнопка перехода в тег <a> и потом div, иначе перезапишеь div -->
+                <div class="closeShopping">Закрыть</div>
+            </div>
+        </div>
         </header>
 
             <div class="list">
@@ -200,14 +246,14 @@
                     <li class="product-title">{{ product.title }}</li>
 
                         <li class="product-size">Большая (0,8–0,9 кг) {{ product.big_price }} руб.
-                            <button onclick="addToCard({{product.id}}, {{product.big_price}}, 2)">Add To Card</button>
+                            <button onclick="addToCard({{product.id}}, {{product.big_price}}, 2)">Добавить в корзину</button>
                         </li>
                         <li class="product-size">Стандартная (0,6–0,7 кг) {{ product.medium_price }} руб.
-                            <button onclick="addToCard({{product.id}}, {{product.medium_price}}, 3)">Add To Card</button>
+                            <button onclick="addToCard({{product.id}}, {{product.medium_price}}, 3)">Добавить в корзину</button>
                         </li>
 
                         <li class="product-size">Тонкое тесто (0,5–0,6 кг) {{ product.thin_price }} руб.
-                            <button onclick="addToCard({{product.id}}, {{product.thin_price}}, 4)">Add To Card</button>
+                            <button onclick="addToCard({{product.id}}, {{product.thin_price}}, 4)">Добавить в корзину</button>
                         </li>
                     <li class="ingredients">{{ product.ingredients }}</li>
                 </ul>
@@ -215,15 +261,7 @@
         {% endfor %}
             </div>
 
-        <div class="card">
-            <h1>Корзина</h1>
-            <ul class="listCard">
-            </ul>
-            <div class="checkOut">
-               <button onclick="add_to_cart_button()"> <a href="../customer/"><div class="total">0 </div></a></button>  <!-- кнопка перехода в тег <a> и потом div, иначе перезапишеь div -->
-                <div class="closeShopping">Закрыть</div>
-            </div>
-        </div>
+
     <script src="{% static 'app.js' %}"></script>
     </div>
 </body>

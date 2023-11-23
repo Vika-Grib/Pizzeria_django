@@ -10,8 +10,11 @@ socket.connect("tcp://localhost:5555")
 
 
 def send_message(data):
+    # print(data, '!!')
     pizzas = data['pizza']
+    # print(pizzas, '!!')
     for pizza in pizzas:
+        pizza['num_of_pizzas'] = len(pizzas) # количество пицц для одного заказа
         print(f"Sending pizza info {pizza}")
         socket.send_json(pizza)
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en - ru">
+<html lang="ru">
 <head>
     {% load static %}
 
@@ -11,87 +11,224 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            display: block;
+            text-align: center;
         }
         header {
-            background-color: #234;
-            background-size: cover;
-            color: #fff;
-            text-align: center;
-            padding: 40px;
-            width: 100%;
+            max-width: 1550px; /* Максимальная ширина шапки */
+            width: 100%; /* Ширина занимает 100% от доступной ширины */
+            margin: 0 auto; /* Центрирование шапки по горизонтали */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            background-color: #2D66AD;
+            color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
         }
-        h1 {
-            margin: 0;
+
+        .basket {
+            text-align: center;
+            margin-left: 550px;
+            font-size: 48px;
+            text-shadow: 2px 2px 2px black;
+        }
+
+        .header-image {
+            margin-right: 10px; /* Отступ справа от изображения */
+            margin-top: 10px; /* Новый отступ сверху */
+        }
+
+        .header-image img {
+            width: 120px; /* Измените значение на ваш выбор */
+            height: 120px; /* Измените значение на ваш выбор */
+        }
+
+
+        h1, h2 {
             color: #ff9900;
             font-size: 36px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
+            text-align: center;
         }
+
+
+        /* Стили для кнопки "На главную" */
+        h1 a, h2 a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            background-color: #e67e22;
+            padding: 8px 12px; /* Уменьшение отступов внутри кнопки */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-left: 500px; /* Перемещение кнопки вправо */
+            margin-right: auto; /* Добавление отступа справа */
+            display: inline-block; /* Чтобы можно было задать ширину и высоту кнопки */
+        }
+
+        h1 a:hover {
+            background-color: #FDC861;  /* Оранжевый цвет фона при наведении */
+            color: #1A1201; /* Изменение цвета текста при наведении */
+        }
+
+
+        h2 a:hover {
+            background-color: #FDC861;  /* Оранжевый цвет фона при наведении */
+            color: #1A1201; /* Изменение цвета текста при наведении */
+        }
+
+
+
         .cart {
-            max-width: 600px;
-            margin: 20px auto;
+            max-width: 900px;
+            margin-top: 50px; /*  желаемый отступ сверху */
+            margin-right: auto; /* желаемый отступ справа */
+            margin-bottom: 20px; /* желаемый отступ снизу */
+            margin-left: auto; /* желаемый отступ слева */
         }
+
         .cart-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* количество пицц в одной строке */
+            column-gap: 20px;
+            row-gap: 60px; /* Увеличил отступ сверху и снизу */
+            margin-top: 50px;
             list-style-type: none;
             padding: 0;
-            margin: 0;
         }
+
         .cart-item {
-            margin-bottom: 10px;
+            margin-bottom: 50px; /* Добавляем отступ снизу между элементами */
             padding: 10px;
             border: 1px solid #ddd;
             background-color: #fff;
             border-radius: 5px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column; /* Используем вертикальное расположение элементов */
             align-items: center;
+            text-align: center; /* Добавляем выравнивание текста по центру */
         }
+
         .cart-item img {
             max-width: 50px;
             max-height: 50px;
             margin-right: 10px;
         }
+
+        .cart-item div {
+            margin-bottom: 10px; /* Увеличим отступ снизу между текстовыми элементами */
+            text-align: center;
+        }
+
+        .title {
+            font-size: 18px; /* Измените размер текста по вашему желанию */
+            font-weight: bold; /* Делаем текст жирным */
+            margin-top: 5px; /* Отступ сверху */
+            text-align: center; /* Центрируем текст */
+        }
+
+
+        .price, .size {
+            margin-top: 5px; /* Добавил отступ сверху между текстовыми элементами */
+            text-align: center;
+        }
+
+
         .empty-cart {
             text-align: center;
             margin-top: 20px;
         }
+
         .total {
-            margin-top: 20px;
+            margin-top: 80px; /* Отступ сверху */
+            margin-bottom: 0px; /* Новый отступ снизу у total - к оплате!*/
             font-weight: bold;
-            text-align: right;
+            text-align: center;
+            margin-right: 0px; /* Добавленный отступ справа */
         }
+
         .checkout-button {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 20px; /* Добавлен отступ сверху */
+            margin-bottom: 20px; /* Добавлен отступ снизу */
+            display: block; /* Делаем кнопку блочным элементом, чтобы занимала всю ширину */
+            margin-left: auto; /* Выравниваем кнопку по правому краю */
+            margin-right: auto; /* Выравниваем кнопку по левому краю */
+            }
+
+        .order_data {
+            text-align: center; /* Изменено выравнивание текста формы на лево */
         }
+
+
+        .payment-method {
+            margin-bottom: 20px; /* Отступ после группы радиокнопок */
+        }
+
+
+
+        .order_data input[type="radio"],
+        .order_data label {
+            display: inline-block; /* Устанавливаем радиокнопки и их метки в одну строку */
+            vertical-align: middle; /* Выравниваем по вертикали */
+            margin-right: 5px; /* Отступ между радиокнопками и их метками */
+
+        }
+
+        .order_data button {
+            margin-top: 20px; /* Отступ перед кнопкой */
+        }
+
+        .order-info {
+            width: 50%; /* Занимает всю доступную ширину */
+            box-sizing: border-box; /* Чтобы поле ввода полностью вместило в себя границы и отступы */
+            margin-bottom: 15px; /* Отступ после полей ввода с адресом и почтой */
+            padding: 10px; /* Поля для визуального выделения */
+            margin-top: 5px;
+        }
+
+        /* Стили для кнопки "На главную" */
+
+
+
+
     </style>
     <title>Корзина</title>
 </head>
 <body>
     <header>
-        <h1>Корзина</h1>
+        <div class="header-image">
+            <img src="/static/—Pngtree—pizza vector decoration_1854566.png" alt="Описание изображения">
+        </div>
+        <h1 class="basket">
+<!--            <img src="/static/—Pngtree—pizza vector decoration_1854566.png" alt="Описание изображения">-->
+            Корзина
+        </h1>
+            <div>
+                <h1><a href="../main">На главную</a></h1>
+                <h2><a href="../back">Статусы заказов/ back</a></h2>
+            </div>
+
     </header>
     <div class="cart">
         {% if cart %}
             <ul class="cart-list">
                 {% for item in cart %}
                     <li class="cart-item">
-                        <img src="{{ item.product.image }}" alt="{{ item.product.title }}">
-                        <div>
-                            <div>Товар ID: {{ item.product.id }}</div>
-                            <div>Количество: {{ item.quantity }}</div>
-                        </div>
                     </li>
                 {% endfor %}
             </ul>
             <div class="total"> </div>
 
+
+            <p style="text-align: center; margin-right: -20px;">Выберите метод оплаты: </p>
             <form class="order_data" action="customer/add_to_cart" method="POST" name="order_data">
                 {% csrf_token %}
             </form>
@@ -100,6 +237,8 @@
             <p class="empty-cart">Ваша корзина пуста</p>
         {% endif %}
 
+
+<!--         <script src="{% static 'new_info.js' %}"></script>-->
 
     <script> var order_products = localStorage.getItem("inputValue")
     let listCard = document.querySelector('.cart-list');
@@ -115,17 +254,26 @@
     order_data.innerHTML = '';
     let newForm = document.createElement('div');
     newForm.innerHTML = `
-            <input name="address" class="order-info" placeholder="Введите ваш адрес: ">
-            <input name="mail" class="order-info" placeholder="Введите ваш mail: ">
+        <div class="payment-method">
+            <input type="radio" id="card" name="payment" value="card" required title="Выберите способ оплаты" oninvalid="this.setCustomValidity('Пожалуйста, выберите способ оплаты')" oninput="this.setCustomValidity('')">
+            <label class="order-info1" for="card">Оплата картой</label><br>
+            <input type="radio" id="cash" name="payment" value="cash" required title="Выберите способ оплаты">
+            <label class="order-info1" for="cash">Оплата наличными</label><br>
 
-            <input type="radio" id="card" name="payment" value="card">
-            <label for="card">Оплата картой</label><br>
-            <input type="radio" id="cash" name="payment" value="cash">
-            <label for="cash">Оплата наличными</label><br>
+        </div>
 
-            <button class="checkout-button">Оформить заказ</button>
+        <br>
+
+            <input name="address" class="order-info" placeholder="Введите ваш адрес: "
+            required title="Введите ваш адрес" oninvalid="this.setCustomValidity('Пожалуйста, введите корректный адрес')" oninput="this.setCustomValidity('')">
+
+            <input name="mail" type="email" pattern=".+@+.+\.+." class="order-info" placeholder="Введите ваш mail: "
+            required title="Введите вашу электронную почту"  oninvalid="this.setCustomValidity('Пожалуйста, введите корректный адрес электронной почты')" oninput="this.setCustomValidity('')">
+
+            <button onclick="new_info()" class="checkout-button">Оформить заказ</button>
             <input name="hidden_data" type="hidden" value='{${order_products}}' >`;
             order_data.appendChild(newForm);
+
     new_order_products.forEach((value, key)=>{
         new_value = '{' + value + '}';
         value = JSON.parse(new_value);
@@ -134,13 +282,13 @@
         count = count + value.quantity;
         let newDiv = document.createElement('li');
         newDiv.innerHTML = `
-            <div><img src=${value.img}></div>
-            <div>${value.title}</div>
-            <div>${value.price}0</div>
-            <div>${value.size}</div>`;
+            <div class="image-container"><img src=${value.img}></div>
+            <div class="title">${value.title}</div>
+            <div class="price">${value.price}0 руб.</div>
+            <div class="size">${value.size}</div>`;
             listCard.appendChild(newDiv);
     })
-    total.innerText = 'К оплате: ' + totalPrice.toLocaleString() + '0';
+    total.innerText = 'К оплате: ' + totalPrice.toLocaleString() + '0 руб.';
 
     </script>
     </div>

@@ -29,29 +29,48 @@ def work_with_transfer_orders_db(transfer_orders):
 def transfering(message):
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
     cursor = conn.cursor()
-    cursor.execute('SELECT * from active_orders')
-    transfer_orders = list(cursor.fetchall())[0][1]
+    cursor.execute(f'''UPDATE customer_order SET status="Курьер в пути!" WHERE order_id="{message['order_id']}"''')
+    conn.commit()
     send_to_notify(message, 'Курьер в пути!')  # отправили курьером
     trancfering_time = random.randint(3,12)
     time.sleep(trancfering_time)
+    conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * from active_orders')
+    transfer_orders = list(cursor.fetchall())[0][1]
     if transfer_orders >= 1:
         transfer_orders -= 1
         work_with_transfer_orders_db(transfer_orders)
         print('*', 'Transfering!', '*', 'Доставлено за время: ', trancfering_time)
-        send_to_notify(message, 'Заказ доставлен!')
+        conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
+        cursor = conn.cursor()
+        cursor.execute(f'''UPDATE customer_order SET status="Заказ доставлен" WHERE order_id="{message['order_id']}"''')
+        conn.commit()
+        send_to_notify(message, 'Заказ доставлен')
 
 
 async def processing_transferinga(socket, transfer_orders):
     #  Wait for next request from client
     message = socket.recv_json()  # запрос на то что мы получим сообщение, запускается постоянно - через ctrl+C нельзя было остановить сервер и следовательно след команда, кот.останавливает цикл
-    transfer_orders += 1
-    work_with_transfer_orders_db(transfer_orders) # доб в базу данных +1 и курьер получает заказ в очередь чтобы ехать - в этом процесс
-    schedule_1(message, transfer_orders) # запускаем процесс трансферинга перманентно
-    elem = message  # на случай если получим не только json, но и сообщение какое-нибудь
-    print(f"Received transfering request: {elem}")
+    print(message, '#####')
+    num_of_pizzas = message['num_of_pizzas']
+    conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
+    cursor = conn.cursor()
+    cursor.execute(f'''INSERT INTO transfer_order(order_id, title, status) VALUES (?,?,?)''', (message['order_id'], message['title'], "Пицца готова")) # выбираем где статус готова и пиццы в заказе
+    conn.commit()
+    cursor.execute(f'''SELECT * from transfer_order WHERE order_id="{message['order_id']}" AND status="Пицца готова"''') # выбираем где статус готова и пиццы в заказе
+    order_pizzas = list(cursor.fetchall())
+    print('order_pizzas!!!!!!!!!!!!!!!!!!!!!!!!!!!!', order_pizzas)
+    if int(num_of_pizzas) == len(order_pizzas):
+        transfer_orders += 1
+        work_with_transfer_orders_db(transfer_orders) # доб в базу данных +1 и курьер получает заказ в очередь чтобы ехать - в этом процесс
+        schedule_1(message, transfer_orders) # запускаем процесс трансферинга перманентно
+        elem = message  # на случай если получим не только json, но и сообщение какое-нибудь
+        print(f"Received transfering request: {elem}")
 
-    #  Do some 'work' - занимает время на обработку и ему нужна 1 сек, чтобы делать что-то дальше
-    time.sleep(1)
+        #  Do some 'work' - занимает время на обработку и ему нужна 1 сек, чтобы делать что-то дальше
+        time.sleep(1)
+
 
 def schedule_1(message, active_orders): # отвечает за работу доставки!
     scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2})  # сам процесс на отправку доставки не запускался дважды - проверяет есть ли уже такое активное задание
@@ -68,8 +87,8 @@ def tr():
 
     while True:
         cursor.execute('SELECT * from active_orders')
-        transfer_orders = list(cursor.fetchall())[0][1]
-        if transfer_orders < 3:
+        transfer_orders = list(cursor.fetchall())[0][1]  # выбирает все элементы подходящие запросу
+        if transfer_orders < 5:
             asyncio.run(processing_transferinga(socket, transfer_orders))  #заказы прих в очередь, запускаем очередь трансферинга и из очереди достаем заказ и отдаем
             print('active_transfer_orders: ', transfer_orders)
         else:

@@ -8,6 +8,12 @@ let quantity = document.querySelector('.quantity');
 
 openShopping.addEventListener('click', ()=>{
     body.classList.add('active');
+//    let to_pay_button = document.getElementById('to_pay_button');
+//    const new_total = document.getElementById('total');  // выуживаем текст из кнопки?чтобы сделать не активной кнопку если нет пицц в заказе
+//    if(new_total.textContent.trim()=='0'){
+//    to_pay_button.disabled = true;
+//    console.log(to_pay_button)
+//    }
 })
 closeShopping.addEventListener('click', ()=>{
     body.classList.remove('active');
@@ -87,6 +93,11 @@ function reloadCard(){
     const totalAmountHeaderElement = document.querySelector('.total-amount-header');
     totalAmountHeaderElement.innerText = totalPrice.toLocaleString() + '0';
 
+//    let to_pay_button = document.querySelector('.to_pay_button');
+//    if(totalPrice!=0){
+//    to_pay_button.prop('disabled')
+//    }
+
     return max_key_1
 }
 
@@ -113,7 +124,8 @@ function add_to_cart_button(){
         new_list_cards_for_button[key] = JSON.stringify(new_listcard_item);
         console.log(new_list_cards_for_button)
 }
-    })
+    });
+
     localStorage.setItem("inputValue", new_list_cards_for_button);
 }
 
