@@ -36,9 +36,13 @@ def cooking(message):  # не отправляет сам заказ, а про�
         send_to_notify(message, 'Пицца готова')
 
 
-async def processing(socket, active_orders): # добавляет заказы в бд
+async def processing(socket): # добавляет заказы в бд
     #  ожидаем след запрос, след заказ, пиццу
     message = socket.recv_json()  # запрос на то что мы получим сообщение, запускается постоянно - через ctrl+C нельзя было остановить сервер и следовательно след команда, кот.останавливает цикл
+    conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * from active_orders')
+    active_orders = list(cursor.fetchall())[0][0]
     active_orders += 1
     work_with_active_orders_db(active_orders) # обновляем в базе данные +1
     schedule_1(message, active_orders) # чтобы дальше передал в готовку кукинг конкретный заказ
@@ -66,9 +70,9 @@ def tr():
     while True:
         cursor.execute('SELECT * from active_orders')
         active_orders = list(cursor.fetchall())[0][0]
-        print('A_O ', active_orders)
-        if active_orders < 7:  # запускаем процессинг когда меньше 5
-            asyncio.run(processing(socket, active_orders))  # когда происходит asyncio.run асинхр процесс, то обновляет значения в work_proc_bd
+        #print('A_O ', active_orders)
+        if active_orders < 5:  # запускаем процессинг когда меньше 5
+            asyncio.run(processing(socket))  # когда происходит asyncio.run асинхр процесс, то обновляет значения в work_proc_bd
             print('active_orders: ', active_orders)
         else:
             pass

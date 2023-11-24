@@ -11,3 +11,8 @@ class Product_pizza(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class User_order(models.Model):
+    order_id = models.TextField(default='')
+    status = models.TextField(default='')

@@ -32,7 +32,7 @@ def transfering(message):
     cursor.execute(f'''UPDATE customer_order SET status="Курьер в пути!" WHERE order_id="{message['order_id']}"''')
     conn.commit()
     send_to_notify(message, 'Курьер в пути!')  # отправили курьером
-    trancfering_time = random.randint(3,12)
+    trancfering_time = random.randint(7,12)
     time.sleep(trancfering_time)
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
     cursor = conn.cursor()
@@ -60,6 +60,8 @@ async def processing_transferinga(socket, transfer_orders):
     conn.commit()
     cursor.execute(f'''SELECT * from transfer_order WHERE order_id="{message['order_id']}" AND status="Пицца готова"''') # выбираем где статус готова и пиццы в заказе
     order_pizzas = list(cursor.fetchall())
+    #  Do some 'work' - занимает время на обработку и ему нужна 1 сек, чтобы делать что-то дальше
+    time.sleep(2)
     print('order_pizzas!!!!!!!!!!!!!!!!!!!!!!!!!!!!', order_pizzas)
     if int(num_of_pizzas) == len(order_pizzas):
         transfer_orders += 1
@@ -68,8 +70,6 @@ async def processing_transferinga(socket, transfer_orders):
         elem = message  # на случай если получим не только json, но и сообщение какое-нибудь
         print(f"Received transfering request: {elem}")
 
-        #  Do some 'work' - занимает время на обработку и ему нужна 1 сек, чтобы делать что-то дальше
-        time.sleep(1)
 
 
 def schedule_1(message, active_orders): # отвечает за работу доставки!
