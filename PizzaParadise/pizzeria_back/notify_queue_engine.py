@@ -59,12 +59,3 @@ def update_status(order_id, status):
     cursor = conn.cursor()
     cursor.execute(f'UPDATE customer_order SET status="{status}" WHERE unique_id="{order_id}"')
     conn.commit()
-
-
-
-   #
-   # order_id = message['order_id']
-   #  pizza_id = message['id'] # чтобы выбирать из количества пицц в заказе по id
-   #  num_of_pizzas = message['num_of_pizzas'] # по ключу к количеству пицц, чтобы взять последнюю
-   #  if int(pizza_id) == int(num_of_pizzas) - 1:
-   #      update_order_for_user(order_id, 'В печи')

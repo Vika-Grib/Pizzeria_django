@@ -24,6 +24,11 @@ def work_with_active_orders_db(active_orders):
 
 def cooking(message):  # не отправляет сам заказ, а просто готовит заказы (ум их количество)
     send_to_notify(message,'В печи')
+    order_id = message['order_id']
+    pizza_id = message['id']  # чтобы выбирать из количества пицц в заказе по id
+    num_of_pizzas = message['num_of_pizzas']  # по ключу к количеству пицц, чтобы взять последнюю
+    if int(pizza_id) == int(num_of_pizzas) - 1:
+        update_order_for_user(order_id, 'В печи')
     time.sleep(10)
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
     cursor = conn.cursor()
@@ -34,6 +39,18 @@ def cooking(message):  # не отправляет сам заказ, а про�
         work_with_active_orders_db(active_orders)
         send_to_next_queue(message)
         send_to_notify(message, 'Пицца готова')
+        if int(pizza_id) == int(num_of_pizzas) - 1:
+            update_order_for_user(order_id, 'Заказ готов')
+
+
+
+def update_order_for_user(order_id, status):
+    conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
+    cursor = conn.cursor()
+    cursor.execute(f'''UPDATE pizzeria_back_user_order SET status="{status}" WHERE order_id="{order_id}"''')
+    conn.commit()
+
+
 
 
 async def processing(socket): # добавляет заказы в бд

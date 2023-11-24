@@ -31,7 +31,9 @@ def transfering(message):
     cursor = conn.cursor()
     cursor.execute(f'''UPDATE customer_order SET status="Курьер в пути!" WHERE order_id="{message['order_id']}"''')
     conn.commit()
-    send_to_notify(message, 'Курьер в пути!')  # отправили курьером
+    send_to_notify(message, 'Курьер в пути')  # отправили курьером
+    order_id = message['order_id']
+    update_order_for_user(order_id, 'Курьер в пути')
     trancfering_time = random.randint(7,12)
     time.sleep(trancfering_time)
     conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
@@ -47,6 +49,14 @@ def transfering(message):
         cursor.execute(f'''UPDATE customer_order SET status="Заказ доставлен" WHERE order_id="{message['order_id']}"''')
         conn.commit()
         send_to_notify(message, 'Заказ доставлен')
+        update_order_for_user(order_id, 'Заказ доставлен')
+
+
+def update_order_for_user(order_id, status):
+    conn = sqlite3.connect('C:\\Users\\Lenovo\\PycharmProjects\\Pizza\\PizzaParadise\\db.sqlite3')
+    cursor = conn.cursor()
+    cursor.execute(f'''UPDATE pizzeria_back_user_order SET status="{status}" WHERE order_id="{order_id}"''')
+    conn.commit()
 
 
 async def processing_transferinga(socket, transfer_orders):
