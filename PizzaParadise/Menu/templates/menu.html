@@ -28,6 +28,13 @@
 
         }
 
+        .checkout-button {
+        background-image: url('{% static "loop.svg" %}');
+        width: 40px; /* нужная ширина в пикселях */
+        height: 40px;
+        margin-top: 0px;
+        }
+
         .header-left {
             display: flex;
             align-items: center;
@@ -220,11 +227,19 @@
         <header>
 
             <h1>Пиццерия Paradise</h1>
+            <form class="total-header" action="../customer/customer/order_info" method="GET" name="order_info">
+                {% csrf_token %}
+                <input name="order_id" class="order-info" placeholder="Ваш номер заказа: "
+            required title="Введите ваш номер заказа" oninvalid="this.setCustomValidity('Пожалуйста, введите корректный номер заказа')" oninput="this.setCustomValidity('')">
+                <button class="checkout-button"></button>
+            </form>
             <div class="total-header">Заказ на сумму: <span class="total-amount-header">0</span> руб.</div>
             <div class="shopping">
                         <img src="{% static 'image/shopping.svg' %}">
                         <span class="quantity">0</span>
                     </div>
+
+
 
             <div class="card">
             <h1>Корзина</h1>
