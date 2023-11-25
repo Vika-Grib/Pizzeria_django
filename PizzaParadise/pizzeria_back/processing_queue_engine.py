@@ -5,12 +5,11 @@ import sqlite3
 import asyncio
 
 from apscheduler.schedulers.background import BackgroundScheduler
-# импорт фонового расписания задач - чтобы вместе с django запускался этот код
 
-# added schedule, ensure its only done once - см. в APPS.PY, благодаря ему запускается очередь
+# добавляем schedule, убедиться что запускается один раз - см. в APPS.PY, благодаря ему запускается очередь
 def schedule():
-    scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2}) # ув максимального количества заданий - такого условия не достигнем, скорее гибкость (на случай такого же сообщения, но ткт запускается 1 раз - то..)
-    if not scheduler.get_job('get_message1'):  #добавляет гибкости,  проверка чтобы уже не выполняло такое же задание
+    scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2})
+    if not scheduler.get_job('get_message1'):
         scheduler.add_job(tr, id='get_message1')
         scheduler.start()
 

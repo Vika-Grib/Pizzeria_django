@@ -6,9 +6,9 @@ import sqlite3
 from apscheduler.schedulers.background import BackgroundScheduler
 # импорт фонового расписания задач - чтобы вместе с django запускался этот код
 
-# added schedule, ensure its only done once - см. в APPS.PY
+# # добавляем schedule, убедиться что запускается один раз - см. в APPS.PY, благодаря ему запускается очередь
 def schedule():
-    scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2}) # ув максимального количества заданий - такого условия не достигнем, скорее гибкость (на случай такого же сообщения, но ткт запускается 1 раз - то..)
+    scheduler = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 2}) #  проверяет, существует ли уже задача, ув максимального количества заданий - такого условия не достигнем, скорее гибкость (на случай такого же сообщения, но ткт запускается 1 раз - то..)
     if not scheduler.get_job('get_message'):  #добавляет гибкости,  проверка чтобы уже не выполняло такое же задание
         scheduler.add_job(tr, id='get_message')
         scheduler.start()
@@ -19,10 +19,7 @@ def tr():
     socket.bind("tcp://*:5555")  # закрепляем конкретный порт за socket-ом
 
     while True:
-        #  Wait for next request from client
         message = socket.recv_json()  # запрос на то что мы получим сообщение, запускается постоянно - через ctrl+C нельзя было остановить сервер и следовательно след команда, кот.останавливает цикл
-
-        #  Do some 'work' - занимает время на обработку и ему нужна 1 сек, чтобы делать что-то дальше
         time.sleep(1)
         order_confirmed = check_order(message['order_id'])
         message['unique_id'] = str(message['order_id']) + '_' + str(message['id'])
@@ -61,8 +58,6 @@ def send_to_db(message):
     cursor.execute('''INSERT INTO customer_order(unique_id, price, title, size, image, order_id, status, pizza_id) VALUES (?,?,?,?,?,?,?,?)''',
                    (message['unique_id'], message['price'], message['title'], message['size'], message['img'], message['order_id'], message['status'], message['id']))
     conn.commit()
-# python manage.py runserver
-
 
 
 def send_to_notify(message, status): # эта ф-ция переход на новый этап очереди (тут след processing)

@@ -35,6 +35,38 @@
         margin-top: 0px;
         }
 
+        form.total-header button.checkout-button {
+            background-color: #FA9F25; /* Цвет фона кнопки */
+            color: #FAF0EE; /* Цвет текста кнопки */
+            padding: 10px 20px; /* Отступы для кнопки */
+            border: none; /* Убрать границу для более чистого вида */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s; /* Добавляет эффект перехода для более плавного изменения */
+            border-radius: 10px; /* Закругление углов */
+            font-weight: bold; /* Жирный текст */
+            font-family: 'fantasy', sans-serif;
+            vertical-align: middle; /* Выравнивание средством выравнивания по вертикали */
+        }
+
+        form.total-header button.checkout-button:hover {
+            background-color: #E94C2B; /* Цвет фона при наведении курсора */
+            color: #fff; /* Цвет текста при наведении курсора */
+        }
+
+        form.total-header input.order-info {
+            color: #1C1F25; /* Цвет текста в поле ввода */
+            background-color: #FA9F25; /* Цвет фона поля ввода */
+            padding: 10px; /* Отступы для поля ввода */
+            border-radius: 10px; /* Закругление углов */
+            font-family: 'fantasy', sans-serif;
+
+        }
+
+        form.total-header input.order-info::placeholder {
+            color: #1C1F25; /* Цвет placeholder (текста внутри поля ввода) */
+        }
+
+
         .header-left {
             display: flex;
             align-items: center;
