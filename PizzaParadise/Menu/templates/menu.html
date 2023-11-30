@@ -259,6 +259,8 @@
         <header>
 
             <h1>Пиццерия Paradise</h1>
+            <h2><a href="#products">Пиццы</a></h2>
+            <h2><a href="#snacks">Закуски</a></h2>
             <form class="total-header" action="../customer/customer/order_info" method="GET" name="order_info">
                 {% csrf_token %}
                 <input name="order_id" class="order-info" placeholder="Ваш номер заказа: "
@@ -284,7 +286,8 @@
         </div>
         </header>
 
-            <div class="list">
+        {% if products %}
+            <div class="list" id="products">
                 {% for product in products %}
             <div class="item">
                 <img src="{{ product.image }}" alt="{{ product.title }}">
@@ -306,7 +309,26 @@
             </div>
         {% endfor %}
             </div>
+        {% endif %}
 
+            {% if snacks %}
+         <div class="list" id="snacks">
+                {% for snack in snacks %}
+            <div class="item">
+                <img src="{{ snack.photo }}" alt="{{ snack.title }}">
+                <ul>
+                    <li class="product-title">{{ snack.title }}</li>
+
+                        <li class="product-size">Большая порция {{ snack.big_price }} руб.
+                            <button onclick="addToCard({{snack.id}}, {{snack.big_price}}, 2)">Добавить в корзину</button>
+                        </li>
+
+                    <li class="ingredients">{{ snack.short_description }}</li>
+                </ul>
+            </div>
+        {% endfor %}
+            </div>
+        {% endif %}
 
     <script src="{% static 'app.js' %}"></script>
     </div>
